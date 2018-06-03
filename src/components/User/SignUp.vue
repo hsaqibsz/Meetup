@@ -7,19 +7,31 @@
             <h2>Sign Up</h2>
                 </v-card-title>
         <v-card-text>
-  <v-form v-model="valid">
+  <v-form  @submit.prevent="onSignUp" >
     <v-text-field
-      :rules="nameRules"
+       
       :counter="10"
-      label="Name"
+      label="Email"
+      id="email"
       required
     ></v-text-field>
     <v-text-field
-      :rules="emailRules"
-      label="E-mail"
+     
+      :counter="6"
+      label="Password"
+      id="password"
+      type="password"
+      v-model="password"
       required
     ></v-text-field>
-    <v-btn class="primary">Ok</v-btn>
+      <v-text-field
+      :rules="[comparePasswords]"
+      label="Confirm Password"
+      id="confirmPassword"
+      type="password"
+      v-model="password"
+    ></v-text-field>
+    <v-btn type="submit" class="primary" >signUp</v-btn>
   </v-form>
         </v-card-text>
             </v-card>
@@ -27,3 +39,26 @@
     </v-layout>
 </v-container>
 </template>
+
+<script>
+export default {
+    data () {
+        return {
+            email: '',
+            password: '', 
+            confirmPassword: ''
+        }
+    },
+    methods: {
+        onSignUp () {
+            //vuex
+            console.log ({email: this.email, password: this.password, confirmPassword: this.confirmPassword})
+        }
+    },
+    computed: {
+        comparePasswords () {
+            return this.password !== this.confirmPassword ? 'passwords do not matched' : ''
+        }
+    }
+}
+</script>
